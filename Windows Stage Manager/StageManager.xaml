@@ -1,0 +1,15 @@
+﻿<Window x:Class="Windows_Stage_Manager.StageManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Windows_Stage_Manager"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Title="StageManager" Height="600" Width="200" Left="10" Top="0" VerticalAlignment="Center" Background="#00000000" AllowsTransparency="True" Topmost="True" ShowInTaskbar="False" x:Name="StageManagerWindow" Visibility="Hidden">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" CanVerticallyScroll="True" x:Name="StageManagerWindowList">
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>
