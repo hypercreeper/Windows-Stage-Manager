@@ -20,31 +20,18 @@ namespace Windows_Stage_Manager
     public partial class MainWindow : Window
     {
 
-        public MainWindow()
+        public static System.Windows.Point point = new System.Windows.Point();
+        async public void mousePosThread()
         {
-            InitializeComponent();
-            new StageManager().Show();
-            Mouse.Capture(this);
-            new Thread(secondThread).Start();
-        }
-        public static Point point = new Point();
-        async public void secondThread()
-        {
-            Thread.Sleep(5000);
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                MainWindow.GetWindow(this).WindowState = WindowState.Minimized;
-            }));
+            Thread.Sleep(1000);
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Elapsed += delegate
             {
-                Application.Current.Dispatcher.Invoke(new Action(() => {
-                    //log.Content = (PointToScreen(Mouse.GetPosition(this))).ToString();
-                    //MainWindow.point = PointToScreen(Mouse.GetPosition(this));
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
                     Mouse.Capture(this);
-                    Point pointToWindow = Mouse.GetPosition(this);
-                    Point pointToScreen = PointToScreen(pointToWindow);
-                    log.Content = pointToScreen.ToString();
+                    System.Windows.Point pointToWindow = Mouse.GetPosition(this);
+                    System.Windows.Point pointToScreen = PointToScreen(pointToWindow);
                     point = pointToScreen;
                     Mouse.Capture(null);
                 }));
@@ -52,12 +39,16 @@ namespace Windows_Stage_Manager
             timer.Interval = 1;
             timer.Start();
         }
-        private void getPosBtn_Click(object sender, RoutedEventArgs e)
+
+        public MainWindow()
         {
-            Thread.Sleep(3000);
-            new Thread(secondThread).Start();
-            MainWindow.GetWindow(this).WindowState = WindowState.Minimized;
-            //new MouseOverlay().Show();
+            InitializeComponent();
+            Thread.Sleep(5000);
+            new StageManager().Show();
+            new Thread(mousePosThread).Start();
+
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Minimized;
         }
 
     }

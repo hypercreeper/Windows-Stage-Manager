@@ -8,6 +8,5 @@
         Title="MainWindow" Height="450" Width="800" ShowInTaskbar="False">
     <Grid>
         <Label Content="Label" HorizontalAlignment="Left" x:Name="log" VerticalAlignment="Top"/>
-        <Button Content="Get Pos" HorizontalAlignment="Left" x:Name="getPosBtn" VerticalAlignment="Top" Click="getPosBtn_Click"/>
     </Grid>
 </Window>

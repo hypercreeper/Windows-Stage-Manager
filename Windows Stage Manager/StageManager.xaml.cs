@@ -31,6 +31,7 @@ namespace Windows_Stage_Manager
     /// </summary>
     public partial class StageManager : Window
     {
+
         // Import the Win32 API functions
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
@@ -175,9 +176,9 @@ namespace Windows_Stage_Manager
         public StageManager()
         {
             InitializeComponent();
-            Thread.Sleep(1000);
             new Thread(autoHide).Start();
             new Thread(autoRefresh).Start();
+            Mouse.Capture(this);
         }
     }
 }

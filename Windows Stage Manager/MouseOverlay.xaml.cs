@@ -34,9 +34,9 @@ namespace Windows_Stage_Manager
         public MouseOverlay()
         {
             InitializeComponent();
-            GetWindow(this).WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Thread.Sleep(1000);
-            new Thread(secondThread).Start();
+            //GetWindow(this).WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            //Thread.Sleep(1000);
+            //new Thread(secondThread).Start();
         }
     }
 }

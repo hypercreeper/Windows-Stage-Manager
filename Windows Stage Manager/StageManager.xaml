@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Windows_Stage_Manager"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="StageManager" Height="600" Width="200" Left="10" Top="0" VerticalAlignment="Center" Background="#00000000" AllowsTransparency="True" Topmost="True" ShowInTaskbar="False" x:Name="StageManagerWindow" Visibility="Hidden">
+        Title="StageManager" Height="600" Width="200" Left="10" VerticalAlignment="Center" Background="#00000000" AllowsTransparency="True" Topmost="True" ShowInTaskbar="False" x:Name="StageManagerWindow" Visibility="Visible">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" CanVerticallyScroll="True" x:Name="StageManagerWindowList">
 
