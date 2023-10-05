@@ -76,15 +76,22 @@ namespace Windows_Stage_Manager
         }
         public static ImageSource BitmapToImageSource(Bitmap bitmap)
         {
-            var hBitmap = bitmap.GetHbitmap();
-            var imageSource = Imaging.CreateBitmapSourceFromHBitmap(
-                hBitmap,
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
+            try
+            {
+                var hBitmap = bitmap.GetHbitmap();
+                var imageSource = Imaging.CreateBitmapSourceFromHBitmap(
+                    hBitmap,
+                    IntPtr.Zero,
+                    Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions());
 
-            DeleteObject(hBitmap); // Release the HBitmap
-            return imageSource;
+                DeleteObject(hBitmap); // Release the HBitmap
+                return imageSource;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         [DllImport("gdi32.dll")]
@@ -120,14 +127,21 @@ namespace Windows_Stage_Manager
                             windowLabel.Effect = new DropShadowEffect { ShadowDepth = 0, Opacity = 1, BlurRadius = 4, Color = System.Windows.Media.Color.FromRgb(255,255,255) };
                             windowImage.Source = new BitmapImage(new Uri("https://th.bing.com/th/id/OIP.OF59vsDmwxPP1tw7b_8clQHaE8?pid=ImgDet&rs=1"));
                             //windowImage.Source = new BitmapImage(new Uri(@"C:\Users\hyper\Pictures\ESP32 Macropad Icon.png"));
-                            windowImage.Source = BitmapToImageSource(ScreenshotHelper.CaptureWindow(handle));
-                            windowImage.Stretch = System.Windows.Media.Stretch.Fill;
-                            windowImage.MaxWidth = 300;
-                            windowImage.MaxHeight = 100;
-                            windowImage.MouseUp += WindowClickHandler;
-                            windowImage.ToolTip = handle;
-                            StageManagerWindowList.Children.Add(windowImage);
-                            StageManagerWindowList.Children.Add(windowLabel);
+                            var img = BitmapToImageSource(ScreenshotHelper.CaptureWindow(handle));
+                            if (img == null)
+                            {
+
+                            }
+                            else {
+                                windowImage.Source = img;
+                                windowImage.Stretch = System.Windows.Media.Stretch.Fill;
+                                windowImage.MaxWidth = 300;
+                                windowImage.MaxHeight = 100;
+                                windowImage.MouseUp += WindowClickHandler;
+                                windowImage.ToolTip = handle;
+                                StageManagerWindowList.Children.Add(windowImage);
+                                StageManagerWindowList.Children.Add(windowLabel);
+                            }
                         }));
                     }
                     else
