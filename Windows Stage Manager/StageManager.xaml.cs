@@ -107,7 +107,7 @@ namespace Windows_Stage_Manager
                 IntPtr handle = window.Key;
                 string title = window.Value;
 
-                if (title != "" && !title.Contains("AEMCapturingWindow") && title != "MainWindow" && title != "Windows Stage Manager" && title != "Windows Input Experience" )
+                if (title != "" && !title.Contains("AEMCapturingWindow") && title != "MainWindow" && title != "Windows Stage Manager" && title != "Windows Input Experience" && title != "StageManager" )
                 {
                     RECT rect;
                     if (GetWindowRect(handle, out rect))
