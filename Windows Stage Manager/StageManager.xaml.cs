@@ -62,8 +62,62 @@ namespace Windows_Stage_Manager
             }
             catch(Exception err)
             {
-                MessageBox.Show(err.Message);
+                try
+                {
+                    [DllImport("user32.dll")] static extern int SetForegroundWindow(nint hwnd);
+                    SetForegroundWindow((nint)((System.Windows.Controls.Label)sender).ToolTip);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show(err.Message);
+                }
             }
+        }
+        private void WindowHoverHandler(object sender, DragEventArgs e)
+        {
+            Timer timer = null;
+            timer = new Timer(delegate
+            {
+                if (((System.Windows.Controls.Image)sender).IsMouseOver)
+                {
+                    try
+                    {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            [DllImport("user32.dll")] static extern int SetForegroundWindow(nint hwnd);
+                            SetForegroundWindow((nint)((System.Windows.Controls.Image)sender).ToolTip);
+                        }));
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message + "\n" + err.Source);
+                    }
+                }
+                timer.Dispose();
+            }, null, 1000, 5000);
+        }
+        private void WindowPreviewHandler(object sender, MouseEventArgs e)
+        {
+            Timer timer = null;
+            timer = new Timer(delegate
+            {
+                if (((System.Windows.Controls.Image)sender).IsMouseOver)
+                {
+                    try
+                    {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            [DllImport("user32.dll")] static extern int SetForegroundWindow(nint hwnd);
+                            SetForegroundWindow((nint)((System.Windows.Controls.Image)sender).ToolTip);
+                        }));
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message + "\n" + err.Source);
+                    }
+                }
+                timer.Dispose();
+            }, null, 1000, 5000);
         }
         // Define the RECT structure
         [StructLayout(LayoutKind.Sequential)]
@@ -125,7 +179,7 @@ namespace Windows_Stage_Manager
                             Label windowLabel = new Label();
                             windowLabel.Content = title;
                             windowLabel.Effect = new DropShadowEffect { ShadowDepth = 0, Opacity = 1, BlurRadius = 4, Color = System.Windows.Media.Color.FromRgb(255,255,255) };
-                            windowImage.Source = new BitmapImage(new Uri("https://th.bing.com/th/id/OIP.OF59vsDmwxPP1tw7b_8clQHaE8?pid=ImgDet&rs=1"));
+                            //windowImage.Source = new BitmapImage(new Uri("https://th.bing.com/th/id/OIP.OF59vsDmwxPP1tw7b_8clQHaE8?pid=ImgDet&rs=1"));
                             //windowImage.Source = new BitmapImage(new Uri(@"C:\Users\hyper\Pictures\ESP32 Macropad Icon.png"));
                             var img = BitmapToImageSource(ScreenshotHelper.CaptureWindow(handle));
                             if (img == null)
@@ -135,10 +189,15 @@ namespace Windows_Stage_Manager
                             else {
                                 windowImage.Source = img;
                                 windowImage.Stretch = System.Windows.Media.Stretch.Fill;
-                                windowImage.MaxWidth = 300;
-                                windowImage.MaxHeight = 100;
+                                //windowImage.MaxWidth = 300;
+                                //windowImage.MaxHeight = 150;
+                                windowImage.AllowDrop = true;
                                 windowImage.MouseUp += WindowClickHandler;
+                                windowImage.DragEnter += WindowHoverHandler;
                                 windowImage.ToolTip = handle;
+                                windowLabel.MouseUp += WindowClickHandler;
+                                windowLabel.ToolTip = handle;
+
                                 StageManagerWindowList.Children.Add(windowImage);
                                 StageManagerWindowList.Children.Add(windowLabel);
                             }

@@ -39,6 +39,21 @@ namespace Windows_Stage_Manager
 
                         return bmp;
                     }
+                    else
+                    {
+                        Bitmap bmp = new Bitmap(1382, 736);
+                        using (Graphics g = Graphics.FromImage(bmp))
+                        {
+                            IntPtr hdcBitmap = g.GetHdc();
+
+                            // Capture the window
+                            PrintWindow(hwnd, hdcBitmap, 0);
+
+                            g.ReleaseHdc(hdcBitmap);
+                        }
+
+                        return bmp;
+                    }
                 }
             }
 
